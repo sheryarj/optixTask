@@ -1,3 +1,6 @@
 export type { MovieCompany } from "./movieCompany";
 export type { Movie } from "./movie";
-export type { MovieData } from "./movieData";
+export type {
+  MovieResponseData,
+  MovieCompanyResponseData,
+} from "./responseData";

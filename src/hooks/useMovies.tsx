@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import axios, { AxiosResponse } from "axios";
-import { MovieData, Movie } from "../types";
+import { MovieResponseData, Movie } from "../types";
 
-export const useMovies = (): MovieData => {
+export const useMovies = (): MovieResponseData => {
   const [data, setData] = useState<Movie[]>([]);
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState(true);
