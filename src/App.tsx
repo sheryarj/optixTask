@@ -9,6 +9,7 @@ const mockMovieCompanyData: any = [{ id: "1", name: "Test Productions" }];
 
 export const App = () => {
   const { data, error, loading } = useMovies();
+  const [selectedMovie, setSelectedMovie] = useState(null);
 
   if (loading) {
     return <div>loading...</div>;
@@ -19,11 +20,7 @@ export const App = () => {
   }
 
   console.log(data);
-
   const movieLength = data.length; //use ref here
-
-  // selected movie logic
-  // const [selectedMovie, setSelectedMovie] = useState({});
 
   const refreshButton = (buttonText: any) => {
     if (mockMovieCompanyData) {
@@ -43,7 +40,7 @@ export const App = () => {
       {data.map((movie: any) => (
         <span
           onClick={() => {
-            console.log(movie);
+            setSelectedMovie(movie);
           }}
         >
           {movie.title}{" "}
@@ -60,8 +57,8 @@ export const App = () => {
       ))}
       <br />
       <div>
-        {/* {selectedMovie
-          ? (selectedMovie.title as any)
+        {selectedMovie
+          ? selectedMovie.title
             ? (("You have selected " + selectedMovie.title) as any)
             : "No Movie Title"
           : "No Movie Seelcted"}
@@ -73,7 +70,7 @@ export const App = () => {
               <input type="text" />
             </label>
           </form>
-        )} */}
+        )}
       </div>
     </div>
   );
