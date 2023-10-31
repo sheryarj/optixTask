@@ -28,7 +28,7 @@ export const useMovies = (): MovieData => {
     };
 
     fetchData();
-  }, []);
+  }, [error]);
 
   return { data, error, loading };
 };
