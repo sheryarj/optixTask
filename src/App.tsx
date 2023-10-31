@@ -61,7 +61,7 @@ export const App = () => {
           ? selectedMovie.title
             ? (("You have selected " + selectedMovie.title) as any)
             : "No Movie Title"
-          : "No Movie Seelcted"}
+          : "No Movie Selected"}
         {selectedMovie && <p>Please leave a review below</p>}
         {selectedMovie && (
           <form onSubmit={() => {}}>
