@@ -1,12 +1,6 @@
 import { useEffect, useState } from "react";
 import axios, { AxiosResponse } from "axios";
-import { Movie } from "../types";
-
-interface MovieData {
-  data: Movie[];
-  error: String;
-  loading: boolean;
-}
+import { MovieData, Movie } from "../types";
 
 export const useMovies = (): MovieData => {
   const [data, setData] = useState<Movie[]>([]);
