@@ -34,7 +34,7 @@ export const App = () => {
       <h2>Welcome to Movie database!</h2>
       {refreshButton("Refresh")}
       <p>Total movies displayed {movieLength}</p>
-      <MovieTable />
+      <MovieTable movieData={data} />
       <span>Title - Review - Film Company</span>
       <br />
       {data.map((movie: any) => (
