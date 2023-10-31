@@ -11,3 +11,7 @@ export interface MovieCompanyResponseData {
   companiesError: String;
   companiesLoading: boolean;
 }
+
+export interface ResponseData {
+  message: string;
+}
