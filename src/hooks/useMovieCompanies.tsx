@@ -16,7 +16,7 @@ export const useMovieCompanies = (): MovieCompanyResponseData => {
         setCompaniesData(response.data);
       } catch (err) {
         console.log(err);
-        setCompaniesError("Failed to retrieve movies");
+        setCompaniesError("Failed to retrieve movie companies");
       }
       setCompaniesLoading(false);
     };
