@@ -3,13 +3,14 @@ import { easeIn, easeOut } from "polished";
 import { useBoolean } from "react-use";
 import { createReducer } from "@reduxjs/toolkit";
 import { useMovies } from "./hooks";
+import { Movie } from "./types";
 
 // TODO: use https://giddy-beret-cod.cyclic.app/movieCompanies
 const mockMovieCompanyData: any = [{ id: "1", name: "Test Productions" }];
 
 export const App = () => {
   const { data, error, loading } = useMovies();
-  const [selectedMovie, setSelectedMovie] = useState(null);
+  const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
 
   if (loading) {
     return <div>loading...</div>;
