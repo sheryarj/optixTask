@@ -2,12 +2,13 @@ import { useRef, useState, Children } from "react";
 import { easeIn, easeOut } from "polished";
 import { useBoolean } from "react-use";
 import { createReducer } from "@reduxjs/toolkit";
-import { useMovies, useMovieCompanies } from "./hooks";
+import { useMovies, useMovieCompanies, usePostReview } from "./hooks";
 import { Movie } from "./types";
+import { MovieTable } from "./components";
 
 export const App = () => {
-  const { companiesData, companiesError, companiesLoading } =
-    useMovieCompanies();
+  const { reviewResponseData, reviewError, reviewIsLoading, submitReview } = usePostReview();
+  const { companiesData, companiesError, companiesLoading } = useMovieCompanies();
   const { data, error, loading } = useMovies();
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
   const movieLength = data.length; //use ref here
@@ -33,6 +34,7 @@ export const App = () => {
       <h2>Welcome to Movie database!</h2>
       {refreshButton("Refresh")}
       <p>Total movies displayed {movieLength}</p>
+      <MovieTable />
       <span>Title - Review - Film Company</span>
       <br />
       {data.map((movie: any) => (
