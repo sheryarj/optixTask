@@ -10,17 +10,15 @@ export const App = () => {
     useMovieCompanies();
   const { data, error, loading } = useMovies();
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
+  const movieLength = data.length; //use ref here
 
   if (loading || companiesLoading) {
     return <div>loading...</div>;
   }
 
   if (error || companiesError) {
-    return <div>Error: {error}</div>;
+    return <div>Error: {error ? error : companiesError}</div>;
   }
-
-  console.log(data);
-  const movieLength = data.length; //use ref here
 
   const refreshButton = (buttonText: any) => {
     if (companiesData) {
