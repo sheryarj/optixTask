@@ -4,7 +4,7 @@ import { useBoolean } from "react-use";
 import { createReducer } from "@reduxjs/toolkit";
 import { useMovies, useMovieCompanies, usePostReview } from "./hooks";
 import { Movie } from "./types";
-import { MovieTable } from "./components";
+import { MovieTable, ReviewForm } from "./components";
 
 export const App = () => {
   const { reviewResponseData, reviewError, reviewIsLoading, submitReview } = usePostReview();
@@ -69,6 +69,7 @@ export const App = () => {
           </form>
         )}
       </div>
+      <ReviewForm />
     </div>
   );
 };
