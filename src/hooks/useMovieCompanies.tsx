@@ -10,9 +10,9 @@ export const useMovieCompanies = (): MovieCompanyResponseData => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response: AxiosResponse<MovieCompany[]> = await axios.get<
-          MovieCompany[]
-        >("https://giddy-beret-cod.cyclic.app/movieCompanies");
+        const response: AxiosResponse<MovieCompany[]> = await axios.get<MovieCompany[]>(
+          "https://giddy-beret-cod.cyclic.app/movieCompanies"
+        );
         setCompaniesData(response.data);
       } catch (err) {
         console.log(err);
