@@ -6,3 +6,9 @@ export interface Movie {
   cost: number;
   releaseYear: number;
 }
+
+export interface MovieInfo {
+  movieTitle: string;
+  reviews: number | null;
+  filmCompanyName: string;
+}
