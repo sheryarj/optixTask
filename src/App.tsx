@@ -1,24 +1,31 @@
-import { useRef, useState, Children } from "react";
-import { easeIn, easeOut } from "polished";
-import { useBoolean } from "react-use";
-import { createReducer } from "@reduxjs/toolkit";
-import { useMovies, useMovieCompanies, usePostReview } from "./hooks";
-import { Movie } from "./types";
-import { MovieTable, ReviewForm } from "./components";
+import { useState } from "react";
+import { useMovies, useMovieCompanies } from "./hooks";
+import { MovieInfo } from "./types";
+import { MovieTable, ReviewForm, LoadingPage, ErrorPage } from "./components";
+import { calculateAverage } from "./helpers";
 
 export const App = () => {
-  const { reviewResponseData, reviewError, reviewIsLoading, submitReview } = usePostReview();
   const { companiesData, companiesError, companiesLoading } = useMovieCompanies();
   const { data, error, loading } = useMovies();
-  const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
-  const movieLength = data.length; //use ref here
+  const [selectedMovie, setSelectedMovie] = useState<any | null>(null);
+  const movieLength = data.length;
+
+  const movieData: MovieInfo[] = data.reduce((result, movie) => {
+    const company = companiesData.find((c) => c.id === movie.filmCompanyId);
+    result.push({
+      movieTitle: movie.title,
+      reviews: calculateAverage(movie.reviews),
+      filmCompanyName: company ? company.name : "Unknown Company",
+    });
+    return result;
+  }, [] as MovieInfo[]);
 
   if (loading || companiesLoading) {
-    return <div>loading...</div>;
+    return <LoadingPage />;
   }
 
   if (error || companiesError) {
-    return <div>Error: {error ? error : companiesError}</div>;
+    return <ErrorPage error={error ? error : companiesError} />;
   }
 
   const refreshButton = (buttonText: any) => {
@@ -34,42 +41,13 @@ export const App = () => {
       <h2>Welcome to Movie database!</h2>
       {refreshButton("Refresh")}
       <p>Total movies displayed {movieLength}</p>
-      <MovieTable movieData={data} />
-      <span>Title - Review - Film Company</span>
+      <MovieTable
+        movieData={movieData}
+        selectedMovie={selectedMovie}
+        setSelectedMovie={setSelectedMovie}
+      />
       <br />
-      {data.map((movie: any) => (
-        <span
-          onClick={() => {
-            setSelectedMovie(movie);
-          }}
-        >
-          {movie.title}{" "}
-          {movie.reviews
-            .reduce((acc: any, i: any) => (acc + i) / movie.reviews.length, 0)
-            ?.toString()
-            .substring(0, 3)}{" "}
-          {companiesData.find((f: any) => f.id === movie.filmCompanyId)?.name}
-          <br />
-        </span>
-      ))}
-      <br />
-      <div>
-        {selectedMovie
-          ? selectedMovie.title
-            ? (("You have selected " + selectedMovie.title) as any)
-            : "No Movie Title"
-          : "No Movie Selected"}
-        {selectedMovie && <p>Please leave a review below</p>}
-        {selectedMovie && (
-          <form onSubmit={() => {}}>
-            <label>
-              Review:
-              <input type="text" />
-            </label>
-          </form>
-        )}
-      </div>
-      <ReviewForm />
+      {selectedMovie && <ReviewForm selectedMovie={selectedMovie.movieTitle} />}
     </div>
   );
 };
